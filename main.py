@@ -61,4 +61,13 @@ shapeOption = StringVar()
 shapeMenu = ttk.OptionMenu(shapeFrame, shapeOption, "Select Dimension")
 shapeMenu.pack(side="right", pady=10, padx=20)
 
+# Square
+
+squareFrame = Frame(root, bg="#272934")
+squareFrame.pack(side="top", fill="both")
+
+squareLabel = ttk.Label(
+    squareFrame, text="Please select the input scale", font=(""))
+
+
 root.mainloop()
