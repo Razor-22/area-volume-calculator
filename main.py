@@ -68,6 +68,7 @@ def changeHeader(value):
     global answer
     answer = value
     shapeNamePlaceHolder.set(value)
+    resultFrame.pack_forget()
     if(value == "Square" or value == "Pentagon" or value == "Hexagon" or value == "Octagon" or value == "Cube" or value == "Tetrahedron"):
         sideFrame.pack(side="top", fill="both")
         sideLabel.pack(side="left", pady=(10, 0), padx=(150, 0))
@@ -327,26 +328,318 @@ def changeHeader(value):
         coneCylinderResetButton.pack_forget()
 
 
-def reset():
-    dimensionDropdown.set_menu(*dimensionOptions)
+def sideReset():
+    sideInputbox.delete(0, END)
+    resultLabel.config(text=" ")
+    resultFrame.pack_forget()
 
 
 def sideButton():
     if(answer == "Square"):
         if(sideInputbox.get().isdigit()):
-            sideInput = int(sideInputbox.get())
-            squareArea = sideInput * sideInput
-            squareResultLabel = ttk.Label(resultFrame, text=f"Area = {sideInput} x {sideInput} = {squareArea}", font=(
-                "Calibri", 14), background="#272934", foreground="white")
+            input = int(sideInputbox.get())
+            squareArea = input * input
+            resultLabel.config(
+                text=f"Area = {squareArea}cm2")
             resultFrame.pack(side="top", fill="both")
-            squareResultLabel.pack(side="top", pady=(50, 0))
-            sideInputbox.delete(0, END)
-            sideInputbox.config(state=DISABLED)
-            sideMetricDropdown.config(state=DISABLED)
-            sideCalculateButton.config(state=DISABLED)
-            shapeDropdown.config(state=DISABLED)
+            resultLabel.pack(side="top", pady=(50, 0))
         else:
             return
+    else:
+        resultFrame.pack_forget()
+
+    if(answer == "Pentagon"):
+        if(sideInputbox.get().isdigit()):
+            input = int(sideInputbox.get())
+            pentagonArea = (
+                math.sqrt(5 * (5 + 2 * (math.sqrt(5)))) * input * input) / 4
+            resultLabel.config(
+                text=f"Area = {pentagonArea}cm2")
+            resultFrame.pack(side="top", fill="both")
+            resultLabel.pack(side="top", pady=(50, 0))
+        else:
+            return
+    if(answer == "Hexagon"):
+        if(sideInputbox.get().isdigit()):
+            input = int(sideInputbox.get())
+            hexagonArea = ((3 * math.sqrt(3) * (input * input)) / 2)
+            resultLabel.config(
+                text=f"Area = {hexagonArea}cm2")
+            resultFrame.pack(side="top", fill="both")
+            resultLabel.pack(side="top", pady=(50, 0))
+        else:
+            return
+    if(answer == "Octagon"):
+        if(sideInputbox.get().isdigit()):
+            input = int(sideInputbox.get())
+            octagonArea = (2 * (1 + (math.sqrt(2))) * input * input)
+            resultLabel.config(
+                text=f"Area = {octagonArea}cm2")
+            resultFrame.pack(side="top", fill="both")
+            resultLabel.pack(side="top", pady=(50, 0))
+        else:
+            return
+    if(answer == "Cube"):
+        if(sideInputbox.get().isdigit()):
+            input = int(sideInputbox.get())
+            cubeArea = 6 * input ** 2
+            cubeVolume = input ** 3
+            resultLabel.config(
+                text=f"Surface Area = {cubeArea}cm2\n Volume = {cubeVolume}cm3")
+            resultFrame.pack(side="top", fill="both")
+            resultLabel.pack(side="top", pady=(50, 0))
+        else:
+            return
+    if(answer == "Tetrahedron"):
+        if(sideInputbox.get().isdigit()):
+            input = int(sideInputbox.get())
+            tetrahedronArea = math.sqrt(3) * (input ** 2)
+            tetrahedronVolume = (input ** 3) / 6 * math.sqrt(2)
+            resultLabel.config(
+                text=f"Surface Area = {tetrahedronArea}cm2\nVolume = {tetrahedronVolume}cm3")
+            resultFrame.pack(side="top", fill="both")
+            resultLabel.pack(side="top", pady=(50, 0))
+        else:
+            return
+
+
+def rectangleButton():
+    if(answer == "Rectangle"):
+        if(rectangleLengthInputbox.get().isdigit() and rectangleWidthInputbox.get().isdigit()):
+            lengthInput = int(rectangleLengthInputbox.get())
+            widthInput = int(rectangleWidthInputbox.get())
+            rectangleArea = lengthInput * widthInput
+            resultLabel.config(
+                text=f" Area = {rectangleArea}cm2")
+            resultFrame.pack(side="top", fill="both")
+            resultLabel.pack(side="top", pady=(50, 0))
+        else:
+            return
+
+
+def rectangleReset():
+    rectangleLengthInputbox.delete(0, END)
+    rectangleWidthInputbox.delete(0, END)
+    resultLabel.config(text=" ")
+    resultFrame.pack_forget()
+
+
+def triangleButton():
+    if(answer == "Triangle"):
+        if(triangleEdge1Inputbox.get().isdigit() and triangleEdge2Inputbox.get().isdigit() and triangleEdge3Inputbox.get().isdigit()):
+            edge1 = int(triangleEdge1Inputbox.get())
+            edge2 = int(triangleEdge2Inputbox.get())
+            edge3 = int(triangleEdge3Inputbox.get())
+            s = (edge1 + edge2 + edge3) / 2
+            triangleArea = (s * (s - edge1) * (s - edge2) * (s - edge3)) ** 0.5
+            resultLabel.config(
+                text=f" Area = {triangleArea}cm2")
+            resultFrame.pack(side="top", fill="both")
+            resultLabel.pack(side="top", pady=(50, 0))
+        else:
+            return
+
+
+def triangleReset():
+    triangleEdge1Inputbox.delete(0, END)
+    triangleEdge2Inputbox.delete(0, END)
+    triangleEdge3Inputbox.delete(0, END)
+    resultLabel.config(text=" ")
+    resultFrame.pack_forget()
+
+
+def radiusButton():
+    if(answer == "Circle"):
+        if(radiusInputbox.get().isdigit()):
+            radiusInput = int(radiusInputbox.get())
+            circleArea = 3.14 * (radiusInput * radiusInput)
+            resultLabel.config(
+                text=f" Area = {circleArea}cm2")
+            resultFrame.pack(side="top", fill="both")
+            resultLabel.pack(side="top", pady=(50, 0))
+        else:
+            return
+    if(answer == "Semi-Circle"):
+        if(radiusInputbox.get().isdigit()):
+            radiusInput = int(radiusInputbox.get())
+            semiCircleArea = 0.5 * 3.14 * (radiusInput * radiusInput)
+            resultLabel.config(
+                text=f" Area = {semiCircleArea}cm2")
+            resultFrame.pack(side="top", fill="both")
+            resultLabel.pack(side="top", pady=(50, 0))
+        else:
+            return
+    if(answer == "Sphere"):
+        if(radiusInputbox.get().isdigit()):
+            radiusInput = int(radiusInputbox.get())
+            sphereArea = 4 * 3.14 * (radiusInput ** 2)
+            sphereVolume = 1.333 * 3.14 * (radiusInput ** 3)
+            resultLabel.config(
+                text=f" Area = {sphereArea}cm2\nVolume = {sphereVolume}cm3")
+            resultFrame.pack(side="top", fill="both")
+            resultLabel.pack(side="top", pady=(50, 0))
+        else:
+            return
+    if(answer == "Hemisphere"):
+        if(radiusInputbox.get().isdigit()):
+            radiusInput = int(radiusInputbox.get())
+            hemiSphereArea = 2 * 3.14 * (radiusInput ** 2)
+            hemiSphereVol = 0.6667 * 3.14 * (radiusInput ** 3)
+            resultLabel.config(
+                text=f" Area = {hemiSphereArea}cm2\nVolume = {hemiSphereVol}cm3")
+            resultFrame.pack(side="top", fill="both")
+            resultLabel.pack(side="top", pady=(50, 0))
+        else:
+            return
+
+
+def radiusReset():
+    radiusInputbox.delete(0, END)
+    resultLabel.config(text=" ")
+    resultFrame.pack_forget()
+
+
+def sectorButton():
+    if(answer == "Sector"):
+        if(sectorRadiusInputbox.get().isdigit() and sectorAngleInputbox.get().isdigit()):
+            angleInput = int(sectorAngleInputbox.get())
+            radiusInput = int(sectorRadiusInputbox.get())
+            sectorArea = 3.14 * radiusInput * radiusInput * angleInput / 360
+            resultLabel.config(
+                text=f" Area = {sectorArea}cm2")
+            resultFrame.pack(side="top", fill="both")
+            resultLabel.pack(side="top", pady=(50, 0))
+        else:
+            return
+
+
+def sectorReset():
+    sectorAngleInputbox.delete(0, END)
+    sectorRadiusInputbox.delete(0, END)
+    resultLabel.config(text=" ")
+    resultFrame.pack_forget()
+
+
+def ellipseButton():
+    if(answer == "Ellipse"):
+        if(majorAxisInputbox.get().isdigit() and minorAxisInputbox.get().isdigit()):
+            majorInput = int(majorAxisInputbox.get())
+            minorInput = int(minorAxisInputbox.get())
+            ellipseArea = 3.14 * majorInput * minorInput
+            resultLabel.config(
+                text=f" Area = {ellipseArea}cm2")
+            resultFrame.pack(side="top", fill="both")
+            resultLabel.pack(side="top", pady=(50, 0))
+        else:
+            return
+
+
+def ellipseReset():
+    majorAxisInputbox.delete(0, END)
+    minorAxisInputbox.delete(0, END)
+    resultLabel.config(text=" ")
+    resultFrame.pack_forget()
+
+
+def trapezoidButton():
+    if(answer == "Trapezoid"):
+        if(trapezoidBase1Inputbox.get().isdigit() and trapezoidBase2Inputbox.get().isdigit() and trapezoidHeightInputbox.get().isdigit()):
+            base1 = int(trapezoidBase1Inputbox.get())
+            base2 = int(trapezoidBase2Inputbox.get())
+            height = int(trapezoidHeightInputbox.get())
+            trapezoidArea = (base1 + base2) / 2 * height
+            resultLabel.config(
+                text=f" Area = {trapezoidArea}cm2")
+            resultFrame.pack(side="top", fill="both")
+            resultLabel.pack(side="top", pady=(50, 0))
+        else:
+            return
+
+
+def trapezoidReset():
+    trapezoidBase1Inputbox.delete(0, END)
+    trapezoidBase2Inputbox.delete(0, END)
+    trapezoidHeightInputbox.delete(0, END)
+    resultLabel.config(text=" ")
+    resultFrame.pack_forget()
+
+
+def cuboidPyramidButton():
+    if(answer == "Cuboid"):
+        if(cuboidPyramidLengthInputbox.get().isdigit() and cuboidPyramidWidthInputbox.get().isdigit() and cuboidPyramidHeightInputbox.get().isdigit()):
+            length = int(cuboidPyramidLengthInputbox.get())
+            width = int(cuboidPyramidWidthInputbox.get())
+            height = int(cuboidPyramidHeightInputbox.get())
+            cuboidArea = 2 * (length * width + width *
+                              height + length * height)
+            cuboidVolume = length * width * height
+            resultLabel.config(
+                text=f" Surface Area = {cuboidArea}cm2\nVolume = {cuboidVolume}cm3")
+            resultFrame.pack(side="top", fill="both")
+            resultLabel.pack(side="top", pady=(50, 0))
+        else:
+            return
+
+    if(answer == "Pyramid"):
+        if(cuboidPyramidLengthInputbox.get().isdigit() and cuboidPyramidWidthInputbox.get().isdigit() and cuboidPyramidHeightInputbox.get().isdigit()):
+            length = int(cuboidPyramidLengthInputbox.get())
+            width = int(cuboidPyramidWidthInputbox.get())
+            height = int(cuboidPyramidHeightInputbox.get())
+            pyramidArea = length * width + length * \
+                math.sqrt((width/2)**2 + height**2) + width * \
+                math.sqrt((length/2)**2 + height ** 2)
+            pyramidVolume = (length * width * height) / 3
+            resultLabel.config(
+                text=f" Surface Area = {pyramidArea}cm2\nVolume = {pyramidVolume}cm3")
+            resultFrame.pack(side="top", fill="both")
+            resultLabel.pack(side="top", pady=(50, 0))
+        else:
+            return
+
+
+def cuboidPyramidReset():
+    cuboidPyramidLengthInputbox.delete(0, END)
+    cuboidPyramidWidthInputbox.delete(0, END)
+    cuboidPyramidHeightInputbox.delete(0, END)
+    resultLabel.config(text=" ")
+    resultFrame.pack_forget()
+
+
+def coneCylinderButton():
+    if(answer == "Cone"):
+        if(coneCylinderRadiusInputbox.get().isdigit() and coneCylinderHeightInputbox.get().isdigit()):
+            radius = float(coneCylinderRadiusInputbox.get())
+            height = float(coneCylinderHeightInputbox.get())
+            coneArea = (3.14 * radius *
+                        (radius + math.sqrt(height * height) + (radius*radius)))
+            coneVolume = 0.333 * 3.14 * (radius ** 2) * height
+            resultLabel.config(
+                text=f" Surface Area = {coneArea}\nVolume = {coneVolume}")
+            resultFrame.pack(side="top", fill="both")
+            resultLabel.pack(side="top", pady=(50, 0))
+        else:
+            return
+
+    if(answer == "Cylinder"):
+        if(coneCylinderRadiusInputbox.get().isdigit() and coneCylinderHeightInputbox.get().isdigit()):
+            radius = int(coneCylinderRadiusInputbox.get())
+            height = int(coneCylinderHeightInputbox.get())
+            cylinderArea = 2 * 3.14 * radius * \
+                height + 2 * 3.14 * (radius ** 2)
+            cylinderVolume = 3.14 * (radius ** 2) * height
+            resultLabel.config(
+                text=f" Surface Area = {cylinderArea}\nVolume = {cylinderVolume}")
+            resultFrame.pack(side="top", fill="both")
+            resultLabel.pack(side="top", pady=(50, 0))
+        else:
+            return
+
+
+def coneCylinderReset():
+    coneCylinderRadiusInputbox.delete(0, END)
+    coneCylinderHeightInputbox.delete(0, END)
+    resultLabel.config(text=" ")
+    resultFrame.pack_forget()
 
     # Dropdown Menu
 shapeDropdown = ttk.OptionMenu(
@@ -378,11 +671,12 @@ sideMetricPlaceholder.set(sideMetricOptions[0])
 
 sideMetricDropdown = ttk.OptionMenu(
     sideFrame, sideMetricPlaceholder, *sideMetricOptions)
+sideMetricDropdown.config(state=DISABLED)
 
 sideButtonsFrame = Frame(root, bg="#272934")
 sideCalculateButton = ttk.Button(
     sideButtonsFrame, text="Calculate", command=sideButton)
-sideResetButton = ttk.Button(sideButtonsFrame, text="Reset", command=reset)
+sideResetButton = ttk.Button(sideButtonsFrame, text="Reset", command=sideReset)
 
 # Rectangle
 rectangleLengthFrame = Frame(root, bg="#272934")
@@ -395,6 +689,7 @@ rectangleLengthMetricPlaceholder.set(rectangleLengthMetricOptions[0])
 
 rectangleLengthMetricDropdown = ttk.OptionMenu(
     rectangleLengthFrame, rectangleLengthMetricPlaceholder, *rectangleLengthMetricOptions)
+rectangleLengthMetricDropdown.config(state=DISABLED)
 
 rectangleWidthFrame = Frame(root, bg="#272934")
 rectangleWidthLabel = ttk.Label(rectangleWidthFrame, text="Width:", font=(
@@ -406,12 +701,13 @@ rectangleWidthMetricPlaceholder.set(rectangleWidthMetricOptions[0])
 
 rectangleWidthMetricDropdown = ttk.OptionMenu(
     rectangleWidthFrame, rectangleWidthMetricPlaceholder, *rectangleWidthMetricOptions)
+rectangleWidthMetricDropdown.config(state=DISABLED)
 
 rectangleButtonsFrame = Frame(root, bg="#272934")
 rectangleCalculateButton = ttk.Button(
-    rectangleButtonsFrame, text="Calculate")
+    rectangleButtonsFrame, text="Calculate", command=rectangleButton)
 rectangleResetButton = ttk.Button(
-    rectangleButtonsFrame, text="Reset", command=reset)
+    rectangleButtonsFrame, text="Reset", command=rectangleReset)
 
 # Triangle
 triangleEdge1Frame = Frame(root, bg="#272934")
@@ -424,6 +720,7 @@ triangleEdge1MetricPlaceholder.set(triangleEdge1MetricOptions[0])
 
 triangleEdge1MetricDropdown = ttk.OptionMenu(
     triangleEdge1Frame, triangleEdge1MetricPlaceholder, *triangleEdge1MetricOptions)
+triangleEdge1MetricDropdown.config(state=DISABLED)
 
 triangleEdge2Frame = Frame(root, bg="#272934")
 triangleEdge2Label = ttk.Label(triangleEdge2Frame, text="Edge 2:", font=(
@@ -435,6 +732,7 @@ triangleEdge2MetricPlaceholder.set(triangleEdge2MetricOptions[0])
 
 triangleEdge2MetricDropdown = ttk.OptionMenu(
     triangleEdge2Frame, triangleEdge2MetricPlaceholder, *triangleEdge2MetricOptions)
+triangleEdge2MetricDropdown.config(state=DISABLED)
 
 triangleEdge3Frame = Frame(root, bg="#272934")
 triangleEdge3Label = ttk.Label(triangleEdge3Frame, text="Edge 3:", font=(
@@ -446,11 +744,13 @@ triangleEdge3MetricPlaceholder.set(triangleEdge3MetricOptions[0])
 
 triangleEdge3MetricDropdown = ttk.OptionMenu(
     triangleEdge3Frame, triangleEdge3MetricPlaceholder, *triangleEdge3MetricOptions)
+triangleEdge3MetricDropdown.config(state=DISABLED)
 
 triangleButtonsFrame = Frame(root, bg="#272934")
-triangleCalculateButton = ttk.Button(triangleButtonsFrame, text="Calculate")
+triangleCalculateButton = ttk.Button(
+    triangleButtonsFrame, text="Calculate", command=triangleButton)
 triangleResetButton = ttk.Button(
-    triangleButtonsFrame, text="Reset", command=reset)
+    triangleButtonsFrame, text="Reset", command=triangleReset)
 
 # Circle Semi-Cricle
 radiusFrame = Frame(root, bg="#272934")
@@ -463,10 +763,13 @@ radiusMetricPlaceholder.set(radiusMetricOptions[0])
 
 radiusMetricDropdown = ttk.OptionMenu(
     radiusFrame, radiusMetricPlaceholder, *radiusMetricOptions)
+radiusMetricDropdown.config(state=DISABLED)
 
 circleButtonsFrame = Frame(root, bg="#272934")
-circleCalculateButton = ttk.Button(circleButtonsFrame, text="Calculate")
-circleResetButton = ttk.Button(circleButtonsFrame, text="Reset", command=reset)
+circleCalculateButton = ttk.Button(
+    circleButtonsFrame, text="Calculate", command=radiusButton)
+circleResetButton = ttk.Button(
+    circleButtonsFrame, text="Reset", command=radiusReset)
 
 # Sector
 sectorRadiusFrame = Frame(root, bg="#272934")
@@ -479,6 +782,7 @@ sectorRadiusMetricPlaceholder.set(sectorRadiusMetricOptions[0])
 
 sectorRadiusMetricDropdown = ttk.OptionMenu(
     sectorRadiusFrame, sectorRadiusMetricPlaceholder, *sectorRadiusMetricOptions)
+sectorRadiusMetricDropdown.config(state=DISABLED)
 
 sectorAngleFrame = Frame(root, bg="#272934")
 sectorAngleLabel = ttk.Label(sectorAngleFrame, text="Angle:", font=(
@@ -490,10 +794,13 @@ sectorAngleMetricPlaceholder.set(sectorAngleMetricOptions[0])
 
 sectorAngleMetricDropdown = ttk.OptionMenu(
     sectorAngleFrame, sectorAngleMetricPlaceholder, *sectorAngleMetricOptions)
+sectorAngleMetricDropdown.config(state=DISABLED)
 
 sectorButtonsFrame = Frame(root, bg="#272934")
-sectorCalculateButton = ttk.Button(sectorButtonsFrame, text="Calculate")
-sectorResetButton = ttk.Button(sectorButtonsFrame, text="Reset", command=reset)
+sectorCalculateButton = ttk.Button(
+    sectorButtonsFrame, text="Calculate", command=sectorButton)
+sectorResetButton = ttk.Button(
+    sectorButtonsFrame, text="Reset", command=sectorReset)
 
 # Ellipse
 majorAxisFrame = Frame(root, bg="#272934")
@@ -506,6 +813,7 @@ majorAxisMetricPlaceholder.set(majorAxisMetricOptions[0])
 
 majorAxisMetricDropdown = ttk.OptionMenu(
     majorAxisFrame, majorAxisMetricPlaceholder, *majorAxisMetricOptions)
+majorAxisMetricDropdown.config(state=DISABLED)
 
 minorAxisFrame = Frame(root, bg="#272934")
 minorAxisLabel = ttk.Label(minorAxisFrame, text="Semi-minor Axes:", font=(
@@ -517,11 +825,13 @@ minorAxisMetricPlaceholder.set(minorAxisMetricOptions[0])
 
 minorAxisMetricDropdown = ttk.OptionMenu(
     minorAxisFrame, minorAxisMetricPlaceholder, *minorAxisMetricOptions)
+minorAxisMetricDropdown.config(state=DISABLED)
 
 ellipseButtonsFrame = Frame(root, bg="#272934")
-ellpiseCalculateButton = ttk.Button(ellipseButtonsFrame, text="Calculate")
+ellpiseCalculateButton = ttk.Button(
+    ellipseButtonsFrame, text="Calculate", command=ellipseButton)
 ellipseResetButton = ttk.Button(
-    ellipseButtonsFrame, text="Reset", command=reset)
+    ellipseButtonsFrame, text="Reset", command=ellipseReset)
 
 # Trapezoid
 trapezoidBase1Frame = Frame(root, bg="#272934")
@@ -534,6 +844,7 @@ trapezoidBase1MetricPlaceholder.set(trapezoidBase1MetricOptions[0])
 
 trapezoidBase1MetricDropdown = ttk.OptionMenu(
     trapezoidBase1Frame, trapezoidBase1MetricPlaceholder, *trapezoidBase1MetricOptions)
+trapezoidBase1MetricDropdown.config(state=DISABLED)
 
 trapezoidBase2Frame = Frame(root, bg="#272934")
 trapezoidBase2Label = ttk.Label(trapezoidBase2Frame, text="Edge 2:", font=(
@@ -545,6 +856,7 @@ trapezoidBase2MetricPlaceholder.set(trapezoidBase2MetricOptions[0])
 
 trapezoidBase2MetricDropdown = ttk.OptionMenu(
     trapezoidBase2Frame, trapezoidBase2MetricPlaceholder, *trapezoidBase2MetricOptions)
+trapezoidBase2MetricDropdown.config(state=DISABLED)
 
 trapezoidHeightFrame = Frame(root, bg="#272934")
 trapezoidHeightLabel = ttk.Label(trapezoidHeightFrame, text="Height:", font=(
@@ -556,11 +868,13 @@ trapezoidHeightMetricPlaceholder.set(trapezoidHeightMetricOptions[0])
 
 trapezoidHeightMetricDropdown = ttk.OptionMenu(
     trapezoidHeightFrame, trapezoidHeightMetricPlaceholder, *trapezoidHeightMetricOptions)
+trapezoidHeightMetricDropdown.config(state=DISABLED)
 
 trapezoidButtonsFrame = Frame(root, bg="#272934")
-trapezoidCalculateButton = ttk.Button(trapezoidButtonsFrame, text="Calculate")
+trapezoidCalculateButton = ttk.Button(
+    trapezoidButtonsFrame, text="Calculate", command=trapezoidButton)
 trapezoidResetButton = ttk.Button(
-    trapezoidButtonsFrame, text="Reset", command=reset)
+    trapezoidButtonsFrame, text="Reset", command=trapezoidReset)
 
 # Cuboid, Pyramid
 cuboidPyramidLengthFrame = Frame(root, bg="#272934")
@@ -573,6 +887,7 @@ cuboidPyramidLengthMetricPlaceholder.set(cuboidPyramidLengthMetricOptions[0])
 
 cuboidPyramidLengthMetricDropdown = ttk.OptionMenu(
     cuboidPyramidLengthFrame, cuboidPyramidLengthMetricPlaceholder, *cuboidPyramidLengthMetricOptions)
+cuboidPyramidLengthMetricDropdown.config(state=DISABLED)
 
 cuboidPyramidWidthFrame = Frame(root, bg="#272934")
 cuboidPyramidWidthLabel = ttk.Label(cuboidPyramidWidthFrame, text="Width:", font=(
@@ -584,6 +899,7 @@ cuboidPyramidWidthMetricPlaceholder.set(cuboidPyramidWidthMetricOptions[0])
 
 cuboidPyramidWidthMetricDropdown = ttk.OptionMenu(
     cuboidPyramidWidthFrame, cuboidPyramidWidthMetricPlaceholder, *cuboidPyramidWidthMetricOptions)
+cuboidPyramidWidthMetricDropdown.config(state=DISABLED)
 
 cuboidPyramidHeightFrame = Frame(root, bg="#272934")
 cuboidPyramidHeightLabel = ttk.Label(cuboidPyramidHeightFrame, text="Height:", font=(
@@ -595,12 +911,13 @@ cuboidPyramidHeightMetricPlaceholder.set(cuboidPyramidHeightMetricOptions[0])
 
 cuboidPyramidHeightMetricDropdown = ttk.OptionMenu(
     cuboidPyramidHeightFrame, cuboidPyramidHeightMetricPlaceholder, *cuboidPyramidHeightMetricOptions)
+cuboidPyramidHeightMetricDropdown.config(state=DISABLED)
 
 cuboidPyramidButtonsFrame = Frame(root, bg="#272934")
 cuboidPyramidCalculateButton = ttk.Button(
-    cuboidPyramidButtonsFrame, text="Calculate")
+    cuboidPyramidButtonsFrame, text="Calculate", command=cuboidPyramidButton)
 cuboidPyramidResetButton = ttk.Button(
-    cuboidPyramidButtonsFrame, text="Reset", command=reset)
+    cuboidPyramidButtonsFrame, text="Reset", command=cuboidPyramidReset)
 
 # Cone, Cylinder
 coneCylinderRadiusFrame = Frame(root, bg="#272934")
@@ -613,6 +930,7 @@ coneCylinderRadiusMetricPlaceholder.set(coneCylinderRadiusMetricOptions[0])
 
 coneCylinderRadiusMetricDropdown = ttk.OptionMenu(
     coneCylinderRadiusFrame, coneCylinderRadiusMetricPlaceholder, *coneCylinderRadiusMetricOptions)
+coneCylinderRadiusMetricDropdown.config(state=DISABLED)
 
 coneCylinderHeightFrame = Frame(root, bg="#272934")
 coneCylinderHeightLabel = ttk.Label(coneCylinderHeightFrame, text="Height:", font=(
@@ -624,13 +942,16 @@ coneCylinderHeightMetricPlaceholder.set(coneCylinderHeightMetricOptions[0])
 
 coneCylinderHeightMetricDropdown = ttk.OptionMenu(
     coneCylinderHeightFrame, coneCylinderHeightMetricPlaceholder, *coneCylinderHeightMetricOptions)
+coneCylinderHeightMetricDropdown.config(state=DISABLED)
 
 coneCylinderButtonsFrame = Frame(root, bg="#272934")
 coneCylinderCalculateButton = ttk.Button(
-    coneCylinderButtonsFrame, text="Calculate")
+    coneCylinderButtonsFrame, text="Calculate", command=coneCylinderButton)
 coneCylinderResetButton = ttk.Button(
-    coneCylinderButtonsFrame, text="Reset", command=reset)
+    coneCylinderButtonsFrame, text="Reset", command=coneCylinderReset)
 
 resultFrame = Frame(root, bg="#272934")
+resultLabel = ttk.Label(resultFrame, text="Area =", font=(
+    "Calibri", 14), background="#272934", foreground="white")
 
 root.mainloop()
