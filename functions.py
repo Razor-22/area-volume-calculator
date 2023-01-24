@@ -5,6 +5,7 @@ import math
 
 def square(side):
     area = side * side
+    return area
 
 
 def rectangle(length, breadth):

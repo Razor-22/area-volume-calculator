@@ -1,5 +1,7 @@
 from tkinter import *
 from tkinter import ttk
+from functions import *
+import math
 
 try:
     from ctypes import windll
@@ -58,8 +60,13 @@ shapePlaceholder = StringVar()
 
 # Function for changing the shape name
 
+answer = "String"
+isClicked = False
+
 
 def changeHeader(value):
+    global answer
+    answer = value
     shapeNamePlaceHolder.set(value)
     if(value == "Square" or value == "Pentagon" or value == "Hexagon" or value == "Octagon" or value == "Cube" or value == "Tetrahedron"):
         sideFrame.pack(side="top", fill="both")
@@ -319,7 +326,29 @@ def changeHeader(value):
         coneCylinderCalculateButton.pack_forget()
         coneCylinderResetButton.pack_forget()
 
-        # Dropdown Menu
+
+def reset():
+    dimensionDropdown.set_menu(*dimensionOptions)
+
+
+def sideButton():
+    if(answer == "Square"):
+        if(sideInputbox.get().isdigit()):
+            sideInput = int(sideInputbox.get())
+            squareArea = sideInput * sideInput
+            squareResultLabel = ttk.Label(resultFrame, text=f"Area = {sideInput} x {sideInput} = {squareArea}", font=(
+                "Calibri", 14), background="#272934", foreground="white")
+            resultFrame.pack(side="top", fill="both")
+            squareResultLabel.pack(side="top", pady=(50, 0))
+            sideInputbox.delete(0, END)
+            sideInputbox.config(state=DISABLED)
+            sideMetricDropdown.config(state=DISABLED)
+            sideCalculateButton.config(state=DISABLED)
+            shapeDropdown.config(state=DISABLED)
+        else:
+            return
+
+    # Dropdown Menu
 shapeDropdown = ttk.OptionMenu(
     chooserFrame, shapePlaceholder, "Select", command=lambda value: changeHeader(value))
 shapeDropdown.pack(side="right", padx=(0, 80), pady=(40, 0))
@@ -351,8 +380,9 @@ sideMetricDropdown = ttk.OptionMenu(
     sideFrame, sideMetricPlaceholder, *sideMetricOptions)
 
 sideButtonsFrame = Frame(root, bg="#272934")
-sideCalculateButton = ttk.Button(sideButtonsFrame, text="Calculate")
-sideResetButton = ttk.Button(sideButtonsFrame, text="Reset")
+sideCalculateButton = ttk.Button(
+    sideButtonsFrame, text="Calculate", command=sideButton)
+sideResetButton = ttk.Button(sideButtonsFrame, text="Reset", command=reset)
 
 # Rectangle
 rectangleLengthFrame = Frame(root, bg="#272934")
@@ -378,8 +408,10 @@ rectangleWidthMetricDropdown = ttk.OptionMenu(
     rectangleWidthFrame, rectangleWidthMetricPlaceholder, *rectangleWidthMetricOptions)
 
 rectangleButtonsFrame = Frame(root, bg="#272934")
-rectangleCalculateButton = ttk.Button(rectangleButtonsFrame, text="Calculate")
-rectangleResetButton = ttk.Button(rectangleButtonsFrame, text="Reset")
+rectangleCalculateButton = ttk.Button(
+    rectangleButtonsFrame, text="Calculate")
+rectangleResetButton = ttk.Button(
+    rectangleButtonsFrame, text="Reset", command=reset)
 
 # Triangle
 triangleEdge1Frame = Frame(root, bg="#272934")
@@ -417,7 +449,8 @@ triangleEdge3MetricDropdown = ttk.OptionMenu(
 
 triangleButtonsFrame = Frame(root, bg="#272934")
 triangleCalculateButton = ttk.Button(triangleButtonsFrame, text="Calculate")
-triangleResetButton = ttk.Button(triangleButtonsFrame, text="Reset")
+triangleResetButton = ttk.Button(
+    triangleButtonsFrame, text="Reset", command=reset)
 
 # Circle Semi-Cricle
 radiusFrame = Frame(root, bg="#272934")
@@ -433,7 +466,7 @@ radiusMetricDropdown = ttk.OptionMenu(
 
 circleButtonsFrame = Frame(root, bg="#272934")
 circleCalculateButton = ttk.Button(circleButtonsFrame, text="Calculate")
-circleResetButton = ttk.Button(circleButtonsFrame, text="Reset")
+circleResetButton = ttk.Button(circleButtonsFrame, text="Reset", command=reset)
 
 # Sector
 sectorRadiusFrame = Frame(root, bg="#272934")
@@ -460,7 +493,7 @@ sectorAngleMetricDropdown = ttk.OptionMenu(
 
 sectorButtonsFrame = Frame(root, bg="#272934")
 sectorCalculateButton = ttk.Button(sectorButtonsFrame, text="Calculate")
-sectorResetButton = ttk.Button(sectorButtonsFrame, text="Reset")
+sectorResetButton = ttk.Button(sectorButtonsFrame, text="Reset", command=reset)
 
 # Ellipse
 majorAxisFrame = Frame(root, bg="#272934")
@@ -486,8 +519,9 @@ minorAxisMetricDropdown = ttk.OptionMenu(
     minorAxisFrame, minorAxisMetricPlaceholder, *minorAxisMetricOptions)
 
 ellipseButtonsFrame = Frame(root, bg="#272934")
-ellpiseCalculateButton = ttk.Button(sectorButtonsFrame, text="Calculate")
-ellipseResetButton = ttk.Button(sectorButtonsFrame, text="Reset")
+ellpiseCalculateButton = ttk.Button(ellipseButtonsFrame, text="Calculate")
+ellipseResetButton = ttk.Button(
+    ellipseButtonsFrame, text="Reset", command=reset)
 
 # Trapezoid
 trapezoidBase1Frame = Frame(root, bg="#272934")
@@ -525,9 +559,10 @@ trapezoidHeightMetricDropdown = ttk.OptionMenu(
 
 trapezoidButtonsFrame = Frame(root, bg="#272934")
 trapezoidCalculateButton = ttk.Button(trapezoidButtonsFrame, text="Calculate")
-trapezoidResetButton = ttk.Button(trapezoidButtonsFrame, text="Reset")
+trapezoidResetButton = ttk.Button(
+    trapezoidButtonsFrame, text="Reset", command=reset)
 
-#Cuboid, Pyramid
+# Cuboid, Pyramid
 cuboidPyramidLengthFrame = Frame(root, bg="#272934")
 cuboidPyramidLengthLabel = ttk.Label(cuboidPyramidLengthFrame, text="Length:", font=(
     "Calibri", 14), background="#272934", foreground="white")
@@ -564,9 +599,10 @@ cuboidPyramidHeightMetricDropdown = ttk.OptionMenu(
 cuboidPyramidButtonsFrame = Frame(root, bg="#272934")
 cuboidPyramidCalculateButton = ttk.Button(
     cuboidPyramidButtonsFrame, text="Calculate")
-cuboidPyramidResetButton = ttk.Button(cuboidPyramidButtonsFrame, text="Reset")
+cuboidPyramidResetButton = ttk.Button(
+    cuboidPyramidButtonsFrame, text="Reset", command=reset)
 
-#Cone, Cylinder
+# Cone, Cylinder
 coneCylinderRadiusFrame = Frame(root, bg="#272934")
 coneCylinderRadiusLabel = ttk.Label(coneCylinderRadiusFrame, text="Radius:", font=(
     "Calibri", 14), background="#272934", foreground="white")
@@ -592,7 +628,9 @@ coneCylinderHeightMetricDropdown = ttk.OptionMenu(
 coneCylinderButtonsFrame = Frame(root, bg="#272934")
 coneCylinderCalculateButton = ttk.Button(
     coneCylinderButtonsFrame, text="Calculate")
-coneCylinderResetButton = ttk.Button(coneCylinderButtonsFrame, text="Reset")
+coneCylinderResetButton = ttk.Button(
+    coneCylinderButtonsFrame, text="Reset", command=reset)
 
+resultFrame = Frame(root, bg="#272934")
 
 root.mainloop()
